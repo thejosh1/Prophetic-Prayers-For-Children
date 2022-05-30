@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:prophetic_prayers_for_children/src/pages/notifications_page.dart';
 import 'package:prophetic_prayers_for_children/src/pages/prayerList.dart';
 import 'package:prophetic_prayers_for_children/src/pages/prayer_detail.dart';
+import 'package:prophetic_prayers_for_children/src/pages/set_reminders.dart';
+import 'package:prophetic_prayers_for_children/widget/input_field.dart';
 
 import 'src/pages/landing_page.dart';
 import 'src/pages/main_page.dart';
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: LandingPage(),
+      home: SetReminders(),
     );
   }
 }

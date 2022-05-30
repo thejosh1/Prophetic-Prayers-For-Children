@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:prophetic_prayers_for_children/widget/big_text.dart';
 
 class PrayerList extends StatefulWidget {
@@ -56,11 +57,11 @@ class _PrayerListState extends State<PrayerList> {
             itemBuilder: (context, index) {
               return Container(
                 margin: EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 20),
-                height: 100,
+                height: 150,
                 width: 100,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
-                  color: index.isEven?Colors.deepOrangeAccent:Colors.purple[400],
+                    gradient: LinearGradient(colors: index.isEven?[Colors.deepOrangeAccent, Colors.orange]:[Colors.purple,Colors.purpleAccent]),//Colors.deepOrangeAccent:Colors.purple[400],
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey,
@@ -70,26 +71,27 @@ class _PrayerListState extends State<PrayerList> {
                     )
                   ]
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                        margin: EdgeInsets.symmetric(vertical: 10),
-                        child: BigText(text: "Prayer For Today", color: Colors.white,)
-                    ),
-                    Container(
-                        margin: EdgeInsets.symmetric(vertical: 10),
-                        child: BigText(text: "01-02-04", color: Colors.white,)
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Icon(Icons.access_alarm, color: Colors.white, size: 20,),
-                        Icon(Icons.share, color: Colors.white, size: 20,),
-                        Icon(Icons.launch_outlined, color: Colors.white, size: 20,)
-                      ],
-                    )
-                  ],
+                child: Container(
+                  margin: EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                          child: BigText(text: DateFormat.MMMd().format(DateTime.now()), color: Colors.white, size: 20,)
+                      ),
+                      Container(
+                          child: BigText(text: "Prophetic Prayers For Children", color: Colors.white,)
+                      ),
+                      SizedBox(height: 50,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Icon(Icons.alarm_add_rounded, color: Colors.white, size: 20,),
+                          Icon(Icons.launch_outlined, color: Colors.white, size: 20,)
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               );
             })
@@ -142,26 +144,37 @@ class _PrayerListState extends State<PrayerList> {
                     width: 200,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: Colors.purple[400]
+                        gradient: LinearGradient(colors: [Colors.purple, Colors.purpleAccent], begin: Alignment.center, end: Alignment.centerRight)
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        BigText(text: "01-01-01", color: Colors.white,),
-                        const SizedBox(height: 10,),
-                        BigText(text: "Prayer For Today", color: Colors.white,),
-                        const SizedBox(height: 10,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Icon(Icons.alarm_add, color: Colors.white, size: 20,),
-                            Icon(Icons.share, color: Colors.white, size: 20,),
-                            Icon(Icons.favorite_outline, color: Colors.white, size: 20,)
-                          ],
-                        )
-                      ],
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                height: 5,
+                                width: 5,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white
+                                ),
+                              ),
+                              SizedBox(width: 5,),
+                              BigText(text: DateFormat.MMMd().format(DateTime.now()), color: Colors.white,),
+                            ],
+                          ),
+                           SizedBox(height: 30,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Icon(Icons.alarm_add, color: Colors.white, size: 20,),
+                              Icon(Icons.launch_outlined, color: Colors.white, size: 20,)
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),

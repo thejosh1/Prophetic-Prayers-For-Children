@@ -1,6 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:prophetic_prayers_for_children/src/pages/auth/sign_up_page.dart';
 import 'package:prophetic_prayers_for_children/src/pages/prayerList.dart';
 
 import '../../widget/big_text.dart';
@@ -33,9 +35,15 @@ class _MainPageState extends State<MainPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Icon(Icons.list, color: Colors.deepOrangeAccent,),
+                  Container(),
                   BigText(text: "Prayers For Today", size: 30, color: Colors.deepOrangeAccent,),
-                  Icon(Icons.share, color: Colors.deepOrangeAccent,)
+                  GestureDetector(
+                    onTap: ()=>Get.to(SignUpPage()),
+                    child: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      child: Icon(Icons.person, color: Colors.deepOrangeAccent,),
+                    ),
+                  )
                 ],
               ),
             ),

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:prophetic_prayers_for_children/src/pages/auth/sign_in_page.dart';
+import 'package:prophetic_prayers_for_children/src/pages/auth/sign_up_page.dart';
 
 import '../../../widget/big_text.dart';
 import '../../../widget/small_text.dart';
@@ -14,18 +18,12 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: _appBar(context),
       body: Container(
           height: double.maxFinite,
           width: double.maxFinite,
           decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                colors: [
-                  Colors.white,
-                  Colors.lightBlueAccent,
-                ],
-                begin: Alignment.center,
-                end: Alignment.bottomCenter
-            ),
+              color: Colors.white
           ),
           child: Align(
             alignment: Alignment.bottomCenter,
@@ -33,15 +31,7 @@ class _SignUpPageState extends State<SignUpPage> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                  margin: EdgeInsets.only(left: 20),
-                  width: 250,
-                  child: BigText(text: "Prophetic Prayers For Children", color: Colors.deepOrangeAccent, size: 20,),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  margin: EdgeInsets.only(bottom: 200),
+                  margin: EdgeInsets.only(bottom: 20),
                   width: 250,
                   height: 60,
                   decoration: BoxDecoration(
@@ -66,7 +56,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 SizedBox(height: 10,),
                 Container(
-                  margin: EdgeInsets.only(bottom: 200),
+                  margin: EdgeInsets.only(bottom: 100),
                   width: 250,
                   height: 60,
                   decoration: BoxDecoration(
@@ -99,7 +89,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           onTap: (){
                             //Navigation Route
                           },
-                          child: SmallText(text: "?Login", color: Colors.purple, size: 12,))
+                          child: GestureDetector(onTap: ()=>Get.to(SignInPage()),child: SmallText(text: "?SignIn", color: Colors.purple, size: 12,)))
                     ],
                   ),
                 )
@@ -107,6 +97,30 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
           )
       ),
+    );
+  }
+
+  _appBar(BuildContext context) {
+    return AppBar(
+      elevation: 0,
+      backgroundColor: Colors.white,
+      leading: GestureDetector(
+        onTap: () {
+          Get.back();
+        },
+        child: Icon(Icons.arrow_back_ios, color: Colors.deepOrangeAccent,),
+      ),
+      title: BigText(text: "Prophetic Prayers For Children", color: Colors.deepOrangeAccent, size: 18,),
+      centerTitle: true,
+      actions: [
+        GestureDetector(
+          onTap: ()=>Get.to(SignInPage()),
+          child: CircleAvatar(
+            backgroundColor: Colors.white,
+            child: Icon(Icons.person, color: Colors.deepOrangeAccent,),
+          ),
+        )
+      ],
     );
   }
 }

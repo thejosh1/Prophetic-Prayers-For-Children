@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
+import 'package:prophetic_prayers_for_children/src/pages/prayer_detail.dart';
+import 'package:prophetic_prayers_for_children/src/pages/set_reminders.dart';
 import 'package:prophetic_prayers_for_children/widget/big_text.dart';
 
 class PrayerList extends StatefulWidget {
@@ -55,42 +59,49 @@ class _PrayerListState extends State<PrayerList> {
             shrinkWrap: true,
             itemCount: 20,
             itemBuilder: (context, index) {
-              return Container(
-                margin: EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 20),
-                height: 150,
-                width: 100,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                    gradient: LinearGradient(colors: index.isEven?[Colors.deepOrangeAccent, Colors.orange]:[Colors.purple,Colors.purpleAccent]),//Colors.deepOrangeAccent:Colors.purple[400],
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey,
-                      blurRadius: 1,
-                      spreadRadius: 0,
-                      offset: Offset(0,3)
-                    )
-                  ]
-                ),
+              return GestureDetector(
+                onTap: ()=>Get.to(PrayerDetails()),
                 child: Container(
-                  margin: EdgeInsets.all(20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                          child: BigText(text: DateFormat.MMMd().format(DateTime.now()), color: Colors.white, size: 20,)
-                      ),
-                      Container(
-                          child: BigText(text: "Prophetic Prayers For Children", color: Colors.white,)
-                      ),
-                      SizedBox(height: 50,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Icon(Icons.alarm_add_rounded, color: Colors.white, size: 20,),
-                          Icon(Icons.launch_outlined, color: Colors.white, size: 20,)
-                        ],
+                  margin: EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 20),
+                  height: 150,
+                  width: 100,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                      gradient: LinearGradient(colors: index.isEven?[Colors.deepOrangeAccent, Colors.orange]:[Colors.purple,Colors.purpleAccent]),//Colors.deepOrangeAccent:Colors.purple[400],
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 1,
+                        spreadRadius: 0,
+                        offset: Offset(0,3)
                       )
-                    ],
+                    ]
+                  ),
+                  child: Container(
+                    margin: EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                            child: BigText(text: DateFormat.MMMd().format(DateTime.now()), color: Colors.white, size: 20,)
+                        ),
+                        Container(
+                            child: BigText(text: "Prophetic Prayers For Children", color: Colors.white,)
+                        ),
+                        SizedBox(height: 50,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            GestureDetector(
+                                onTap: (){
+                                  Get.to(SetReminders());
+                                },
+                                child: Icon(Icons.alarm_add_rounded, color: Colors.white, size: 20,)),
+                            GestureDetector(onTap: ()=>Get.to(PrayerDetails()),child: Icon(Icons.launch_outlined, color: Colors.white, size: 20,))
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
               );
@@ -122,16 +133,19 @@ class _PrayerListState extends State<PrayerList> {
         child: Stack(
             alignment: Alignment.center,
             children: [
-              Container(
-                height: 230,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    image: DecorationImage(
-                      image: AssetImage(
-                        "img/lonely_man.jpg"
-                      ),
-                      fit: BoxFit.cover
-                    )
+              GestureDetector(
+                onTap: ()=>Get.to(PrayerDetails()),
+                child: Container(
+                  height: 230,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      image: DecorationImage(
+                        image: AssetImage(
+                          "img/lonely_man.jpg"
+                        ),
+                        fit: BoxFit.cover
+                      )
+                  ),
                 ),
               ),
               Positioned(
@@ -144,7 +158,7 @@ class _PrayerListState extends State<PrayerList> {
                     width: 200,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        gradient: LinearGradient(colors: [Colors.purple, Colors.purpleAccent], begin: Alignment.center, end: Alignment.centerRight)
+                        gradient: LinearGradient(colors: [Colors.purple, Colors.purpleAccent], begin: Alignment.center, end: Alignment.bottomRight)
                     ),
                     child: Container(
                       padding: EdgeInsets.symmetric(vertical: 10),
@@ -169,8 +183,8 @@ class _PrayerListState extends State<PrayerList> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Icon(Icons.alarm_add, color: Colors.white, size: 20,),
-                              Icon(Icons.launch_outlined, color: Colors.white, size: 20,)
+                              GestureDetector(onTap: ()=>Get.to(SetReminders()),child: Icon(Icons.alarm_add, color: Colors.white, size: 20,)),
+                              GestureDetector(onTap: ()=>Get.to(PrayerDetails()),child: Icon(Icons.launch_outlined, color: Colors.white, size: 20,))
                             ],
                           )
                         ],

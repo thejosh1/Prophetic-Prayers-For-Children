@@ -12,11 +12,10 @@ class InputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          BigText(text: title),
+          BigText(text: title, color: Colors.deepOrangeAccent,),
           SizedBox(height: 10,),
           Container(
             height: 52,

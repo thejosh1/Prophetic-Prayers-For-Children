@@ -6,7 +6,8 @@ TextStyle get HeadingStyle{
   return GoogleFonts.lato(
     textStyle: TextStyle(
       fontSize: 30,
-      fontWeight: FontWeight.bold
+      fontWeight: FontWeight.bold,
+      color: Colors.deepOrangeAccent
     )
   );
 }

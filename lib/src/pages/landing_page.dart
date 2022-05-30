@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:prophetic_prayers_for_children/src/pages/auth/sign_in_page.dart';
+import 'package:prophetic_prayers_for_children/src/pages/main_page.dart';
+import 'package:prophetic_prayers_for_children/src/pages/prayerList.dart';
 import 'package:prophetic_prayers_for_children/widget/big_text.dart';
 import 'package:prophetic_prayers_for_children/widget/small_text.dart';
 
@@ -17,14 +21,7 @@ class _LandingPageState extends State<LandingPage> {
         height: double.maxFinite,
         width: double.maxFinite,
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              colors: [
-                Colors.white,
-                Colors.lightBlueAccent,
-              ],
-            begin: Alignment.center,
-            end: Alignment.bottomCenter
-          ),
+          color: Colors.white
         ),
           child: Align(
             alignment: Alignment.bottomCenter,
@@ -36,7 +33,7 @@ class _LandingPageState extends State<LandingPage> {
                   width: 250,
                   child: BigText(text: "Prophetic Prayers For Children", color: Colors.deepOrangeAccent, size: 20,),
                   ),
-                const SizedBox(
+                SizedBox(
                   height: 20,
                 ),
                 Container(
@@ -58,6 +55,7 @@ class _LandingPageState extends State<LandingPage> {
                   child: GestureDetector(
                     onTap: () {
                       //Navigation Route
+                      Get.to(MainPage());
                     },
                     child: Center(
                         child: BigText(text: "Get Started", color: Colors.white,)),
@@ -72,6 +70,7 @@ class _LandingPageState extends State<LandingPage> {
                       GestureDetector(
                         onTap: (){
                           //Navigation Route
+                          Get.to(SignInPage());
                         },
                           child: SmallText(text: "?Sign in", color: Colors.purple, size: 12,))
                     ],

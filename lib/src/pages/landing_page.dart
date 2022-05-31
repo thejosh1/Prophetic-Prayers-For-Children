@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:prophetic_prayers_for_children/src/pages/auth/sign_in_page.dart';
 import 'package:prophetic_prayers_for_children/src/pages/main_page.dart';
-import 'package:prophetic_prayers_for_children/src/pages/prayerList.dart';
 import 'package:prophetic_prayers_for_children/widget/big_text.dart';
 import 'package:prophetic_prayers_for_children/widget/small_text.dart';
 
@@ -29,19 +28,19 @@ class _LandingPageState extends State<LandingPage> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                  margin: EdgeInsets.only(left: 20),
+                  margin: const EdgeInsets.only(left: 20),
                   width: 250,
                   child: BigText(text: "Prophetic Prayers For Children", color: Colors.deepOrangeAccent, size: 20,),
                   ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Container(
-                  margin: EdgeInsets.only(bottom: 200),
+                  margin: const EdgeInsets.only(bottom: 200),
                   width: 250,
                   height: 60,
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
+                    gradient: const LinearGradient(
                       colors: [
                         Colors.orangeAccent,
                         Colors.deepOrangeAccent,
@@ -55,14 +54,14 @@ class _LandingPageState extends State<LandingPage> {
                   child: GestureDetector(
                     onTap: () {
                       //Navigation Route
-                      Get.to(MainPage());
+                      Get.to(()=>const MainPage());
                     },
                     child: Center(
                         child: BigText(text: "Get Started", color: Colors.white,)),
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(bottom: 10),
+                  margin: const EdgeInsets.only(bottom: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -70,7 +69,7 @@ class _LandingPageState extends State<LandingPage> {
                       GestureDetector(
                         onTap: (){
                           //Navigation Route
-                          Get.to(SignInPage());
+                          Get.to(const SignInPage());
                         },
                           child: SmallText(text: "?Sign in", color: Colors.purple, size: 12,))
                     ],

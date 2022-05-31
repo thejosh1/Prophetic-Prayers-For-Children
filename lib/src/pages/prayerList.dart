@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 import 'package:prophetic_prayers_for_children/src/pages/prayer_detail.dart';
 import 'package:prophetic_prayers_for_children/src/pages/set_reminders.dart';
+import 'package:prophetic_prayers_for_children/utils/ui.dart';
 import 'package:prophetic_prayers_for_children/widget/big_text.dart';
 
 class PrayerList extends StatefulWidget {
@@ -41,7 +41,7 @@ class _PrayerListState extends State<PrayerList> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
+        SizedBox(
           height: 320,
           child: PageView.builder(
               controller: _pageController,
@@ -50,25 +50,25 @@ class _PrayerListState extends State<PrayerList> {
                 return _buildPage(index);
               }),
         ),
-        SizedBox(height: 30,),
+        const SizedBox(height: 30,),
         //other prayers
         Center(child: BigText(text: "Prayers For the Year", color: Colors.deepOrangeAccent,),),
-        SizedBox(height: 10,),
+        const SizedBox(height: 10,),
         ListView.builder(
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: 20,
             itemBuilder: (context, index) {
               return GestureDetector(
-                onTap: ()=>Get.to(PrayerDetails()),
+                onTap: ()=>Get.to(()=> const PrayerDetails()),
                 child: Container(
-                  margin: EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 20),
+                  margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 20),
                   height: 150,
                   width: 100,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
                       gradient: LinearGradient(colors: index.isEven?[Colors.deepOrangeAccent, Colors.orange]:[Colors.purple,Colors.purpleAccent]),//Colors.deepOrangeAccent:Colors.purple[400],
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
                         color: Colors.grey,
                         blurRadius: 1,
@@ -78,26 +78,48 @@ class _PrayerListState extends State<PrayerList> {
                     ]
                   ),
                   child: Container(
-                    margin: EdgeInsets.all(20),
+                    margin: const EdgeInsets.all(20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                            child: BigText(text: DateFormat.MMMd().format(DateTime.now()), color: Colors.white, size: 20,)
+                            child: Text(DateFormat.MMMd().format(DateTime.now()), style: listHeadingStyle, )
                         ),
                         Container(
-                            child: BigText(text: "Prophetic Prayers For Children", color: Colors.white,)
+                            child: Text("Prophetic Prayers For Children", style: listHeadingStyle,)
                         ),
-                        SizedBox(height: 50,),
+                        const SizedBox(height: 50,),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            Container(
+                              height: 20,
+                              width: 20,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: Colors.white60
+                              ),
+                            ),
                             GestureDetector(
                                 onTap: (){
-                                  Get.to(SetReminders());
+                                  Get.to(()=> const SetReminders());
                                 },
-                                child: Icon(Icons.alarm_add_rounded, color: Colors.white, size: 20,)),
-                            GestureDetector(onTap: ()=>Get.to(PrayerDetails()),child: Icon(Icons.launch_outlined, color: Colors.white, size: 20,))
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                   Text("Set Reminder", style: ListHeadingStyle,),
+                                    const Icon(Icons.alarm_add_rounded, color: Colors.white, size: 20,),
+                                  ],
+                                )),
+                            // GestureDetector(onTap: ()=>Get.to(()=>const PrayerDetails()),
+                            //     child: Row(
+                            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            //       children: [
+                            //         //Text("See Prayer Point For Today", style: ListHeadingStyle,),
+                            //         const Icon(Icons.launch_outlined, color: Colors.white, size: 20,),
+                            //       ],
+                            //     )
+                            // )
                           ],
                         )
                       ],
@@ -110,22 +132,22 @@ class _PrayerListState extends State<PrayerList> {
     );
   }
   Widget _buildPage(int index) {
-    Matrix4 matrix = new Matrix4.identity();
+    Matrix4 matrix = Matrix4.identity();
     if(index == _currPageValue.floor()) {
-      var _currScale = 1 - (_currPageValue - index) * (1 - _scaleFactor);
-      var _currTrans = _height * (1 - _currScale)/2;
-      matrix = Matrix4.diagonal3Values(1.0, _currScale, 1.0)..setTranslationRaw(0, _currTrans, 0);
+      var currScale = 1 - (_currPageValue - index) * (1 - _scaleFactor);
+      var currTrans = _height * (1 - currScale)/2;
+      matrix = Matrix4.diagonal3Values(1.0, currScale, 1.0)..setTranslationRaw(0, currTrans, 0);
     } else if(index == _currPageValue.floor()+1) {
-      var _currScale = _scaleFactor + (_currPageValue - index +1) * (1 - _scaleFactor);
-      var _currTrans = _height * (1 - _currScale)/2;
-      matrix = Matrix4.diagonal3Values(1.0, _currScale, 1.0)..setTranslationRaw(0, _currTrans, 0);
+      var currScale = _scaleFactor + (_currPageValue - index +1) * (1 - _scaleFactor);
+      var currTrans = _height * (1 - currScale)/2;
+      matrix = Matrix4.diagonal3Values(1.0, currScale, 1.0)..setTranslationRaw(0, currTrans, 0);
     } else if(index == _currPageValue.floor()-1) {
-      var _currScale = 1 - (_currPageValue - index) * (1 - _scaleFactor);
-      var _currTrans = _height * (1 - _currScale)/2;
-      matrix = Matrix4.diagonal3Values(1.0, _currScale, 1.0)..setTranslationRaw(0, _currTrans, 0);
+      var currScale = 1 - (_currPageValue - index) * (1 - _scaleFactor);
+      var currTrans = _height * (1 - currScale)/2;
+      matrix = Matrix4.diagonal3Values(1.0, currScale, 1.0)..setTranslationRaw(0, currTrans, 0);
     } else {
-      var _currScale = 0.8;
-      matrix = Matrix4.diagonal3Values(1.0, _currScale, 1.0)..setTranslationRaw(0, _height * (1 - _scaleFactor)/2, 0);
+      var currScale = 0.8;
+      matrix = Matrix4.diagonal3Values(1.0, currScale, 1.0)..setTranslationRaw(0, _height * (1 - _scaleFactor)/2, 0);
     } return Transform(
       transform: matrix,
       child: Padding(
@@ -134,12 +156,12 @@ class _PrayerListState extends State<PrayerList> {
             alignment: Alignment.center,
             children: [
               GestureDetector(
-                onTap: ()=>Get.to(PrayerDetails()),
+                onTap: ()=>Get.to(const PrayerDetails()),
                 child: Container(
                   height: 230,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      image: DecorationImage(
+                      image: const DecorationImage(
                         image: AssetImage(
                           "img/lonely_man.jpg"
                         ),
@@ -153,38 +175,26 @@ class _PrayerListState extends State<PrayerList> {
                 child: Align(
                   alignment: Alignment.bottomCenter,
                   child: Container(
-                    padding: EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 5),
+                    padding: const EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 5),
                     height: 100,
                     width: 200,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        gradient: LinearGradient(colors: [Colors.purple, Colors.purpleAccent], begin: Alignment.center, end: Alignment.bottomRight)
+                        gradient: const LinearGradient(colors: [Colors.purple, Colors.purpleAccent], begin: Alignment.center, end: Alignment.bottomRight)
                     ),
                     child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 10),
+                      padding: const EdgeInsets.symmetric(vertical: 10),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            children: [
-                              Container(
-                                height: 5,
-                                width: 5,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.white
-                                ),
-                              ),
-                              SizedBox(width: 5,),
-                              BigText(text: DateFormat.MMMd().format(DateTime.now()), color: Colors.white,),
-                            ],
-                          ),
-                           SizedBox(height: 30,),
+                          Spacer(),
+                           const SizedBox(height: 30,),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              GestureDetector(onTap: ()=>Get.to(SetReminders()),child: Icon(Icons.alarm_add, color: Colors.white, size: 20,)),
-                              GestureDetector(onTap: ()=>Get.to(PrayerDetails()),child: Icon(Icons.launch_outlined, color: Colors.white, size: 20,))
+                              GestureDetector(onTap: ()=>Get.to(()=> const SetReminders()),child: const Icon(Icons.alarm_add, color: Colors.white, size: 20,)),
+                              Text(DateFormat.MMMd().format(DateTime.now()), style: listHeadingStyle,),
+                              GestureDetector(onTap: ()=>Get.to(const PrayerDetails()),child: const Icon(Icons.launch_outlined, color: Colors.white, size: 20,))
                             ],
                           )
                         ],

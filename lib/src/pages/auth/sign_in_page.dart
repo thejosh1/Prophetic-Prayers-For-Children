@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:prophetic_prayers_for_children/src/pages/auth/sign_up_page.dart';
 
 import '../../../widget/big_text.dart';
@@ -30,11 +29,11 @@ class _SignInPageState extends State<SignInPage> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                  margin: EdgeInsets.only(bottom: 20),
+                  margin: const EdgeInsets.only(bottom: 20),
                   width: 250,
                   height: 60,
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(
+                      gradient: const LinearGradient(
                           colors: [
                             Colors.orangeAccent,
                             Colors.deepOrangeAccent,
@@ -53,13 +52,13 @@ class _SignInPageState extends State<SignInPage> {
                         child: BigText(text: "Sign In With Email", color: Colors.white,)),
                   ),
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 Container(
-                  margin: EdgeInsets.only(bottom: 100),
+                  margin: const EdgeInsets.only(bottom: 100),
                   width: 250,
                   height: 60,
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(
+                      gradient: const LinearGradient(
                           colors: [
                             Colors.orangeAccent,
                             Colors.deepOrangeAccent,
@@ -79,7 +78,7 @@ class _SignInPageState extends State<SignInPage> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(bottom: 10),
+                  margin: const EdgeInsets.only(bottom: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -88,7 +87,7 @@ class _SignInPageState extends State<SignInPage> {
                           onTap: (){
                             //Navigation Route
                           },
-                          child: GestureDetector(onTap: ()=>Get.to(SignUpPage()),child: SmallText(text: "?SignUp", color: Colors.purple, size: 12,)))
+                          child: GestureDetector(onTap: ()=>Get.to(const SignUpPage()),child: SmallText(text: "?SignUp", color: Colors.purple, size: 12,)))
                     ],
                   ),
                 )
@@ -107,14 +106,14 @@ class _SignInPageState extends State<SignInPage> {
         onTap: () {
           Get.back();
         },
-        child: Icon(Icons.arrow_back_ios, color: Colors.deepOrangeAccent,),
+        child: const Icon(Icons.arrow_back_ios, color: Colors.deepOrangeAccent,),
       ),
       title: BigText(text: "Prophetic Prayers For Children", color: Colors.deepOrangeAccent, size: 18,),
       centerTitle: true,
       actions: [
         GestureDetector(
-          onTap: ()=>Get.to(SignInPage()),
-          child: CircleAvatar(
+          onTap: ()=>Get.to(const SignInPage()),
+          child: const CircleAvatar(
             backgroundColor: Colors.white,
             child: Icon(Icons.person, color: Colors.deepOrangeAccent,),
           ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 import 'package:prophetic_prayers_for_children/src/pages/auth/sign_in_page.dart';
+import 'package:prophetic_prayers_for_children/utils/ui.dart';
 import 'package:prophetic_prayers_for_children/widget/small_text.dart';
 
 import '../../widget/big_text.dart';
@@ -15,7 +15,7 @@ class PrayerDetails extends StatelessWidget {
     return Scaffold(
       appBar: _appBar(context),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white
         ),
         child: Center(
@@ -27,8 +27,21 @@ class PrayerDetails extends StatelessWidget {
               ),
               const SizedBox(height: 20,),
               Container(
-                margin: EdgeInsets.only(left: 20, right: 20),
-                child: Center(child: SmallText(text: "James 1:17 Every good and perfect gift is from above, coming down from the Father of the heavenly lights, who does not change like shifting shadows.",)),
+                margin: const EdgeInsets.only(left: 20, right: 20),
+                height: 200,
+                width: 300,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: Colors.deepOrangeAccent, width: 2)
+                ),
+                child: Padding(padding: EdgeInsets.all(10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text("James 1:17", style: textHeadingStyle,),
+                    Text(textAlign: TextAlign.center,"Every good and perfect gift is from above, coming down from the Father of the heavenly lights, who does not change like shifting shadows.", style: textHeadingStyle,),
+                  ],
+                )),
               )
             ],
           ),
@@ -45,14 +58,14 @@ class PrayerDetails extends StatelessWidget {
         onTap: () {
           Get.back();
         },
-        child: Icon(Icons.arrow_back_ios, color: Colors.deepOrangeAccent,),
+        child: const Icon(Icons.arrow_back_ios, color: Colors.deepOrangeAccent,),
       ),
       title: BigText(text: "Prophetic Prayers For Children", color: Colors.deepOrangeAccent, size: 18,),
       centerTitle: true,
       actions: [
         GestureDetector(
-          onTap: ()=>Get.to(SignInPage()),
-          child: CircleAvatar(
+          onTap: ()=>Get.to(const SignInPage()),
+          child: const CircleAvatar(
             backgroundColor: Colors.white,
             child: Icon(Icons.person, color: Colors.deepOrangeAccent,),
           ),

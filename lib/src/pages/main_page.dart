@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -31,15 +30,15 @@ class _MainPageState extends State<MainPage> {
           children: [
             //header
             Container(
-              margin: EdgeInsets.only(left: 20, right: 20, top: 40, bottom: 20),
+              margin: const EdgeInsets.only(left: 20, right: 20, top: 40, bottom: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(),
                   BigText(text: "Prayers For Today", size: 30, color: Colors.deepOrangeAccent,),
                   GestureDetector(
-                    onTap: ()=>Get.to(SignUpPage()),
-                    child: CircleAvatar(
+                    onTap: ()=>Get.to(()=> const SignUpPage()),
+                    child: const CircleAvatar(
                       backgroundColor: Colors.white,
                       child: Icon(Icons.person, color: Colors.deepOrangeAccent,),
                     ),

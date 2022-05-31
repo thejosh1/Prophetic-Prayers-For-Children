@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
+import 'package:prophetic_prayers_for_children/src/controllers/remind_controller.dart';
+import 'package:prophetic_prayers_for_children/src/pages/saved_reminders.dart';
 import 'package:prophetic_prayers_for_children/utils/ui.dart';
 import 'package:prophetic_prayers_for_children/widget/big_text.dart';
 import 'package:prophetic_prayers_for_children/widget/my_button.dart';
 import 'package:prophetic_prayers_for_children/widget/input_field.dart';
 
+import '../services/reminder.dart';
 import 'auth/sign_in_page.dart';
 
 class SetReminders extends StatefulWidget {
@@ -18,6 +19,7 @@ class SetReminders extends StatefulWidget {
 }
 
 class _SetRemindersState extends State<SetReminders> {
+  final RemindController _remindController = Get.put(RemindController());
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
   final _currentDate = DateTime.now();
@@ -46,33 +48,39 @@ class _SetRemindersState extends State<SetReminders> {
       appBar: _appBar(context),
       backgroundColor: Colors.white,
       body: Container(
-        padding: EdgeInsets.only(left: 20, right: 20,),
+        padding: const EdgeInsets.only(left: 20, right: 20,),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Add Task", style: HeadingStyle, ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Add Task", style: HeadingStyle, ),
+                  GestureDetector(onTap: ()=>Get.to(()=> SavedReminders()),child: const MyButton(label: "View Reminders", color: Colors.purple,))
+                ],
+              ),
               Column(
                 children: [
-                  SizedBox(height: 20,),
+                  const SizedBox(height: 20,),
                   InputField(title: "Title", hint: "Enter Your Title", controller: _titleController,),
                 ],
               ),
               Column(
                 children: [
-                  SizedBox(height: 20,),
+                  const SizedBox(height: 20,),
                   InputField(title: "Note", hint: "Enter Your Note", controller: _noteController,),
                 ],
               ),
               Column(
                 children: [
-                  SizedBox(height: 20,),
+                  const SizedBox(height: 20,),
                   InputField(title: "Time", hint: _selectedTime.format(context).toString(), widget: IconButton(onPressed: (){_getTimeOfDay();}, icon: Icon(Icons.access_time_rounded, size: 14, color: Colors.grey[600],)),),
                 ],
               ),
               Column(
                 children: [
-                  SizedBox(height: 20,),
+                  const SizedBox(height: 20,),
                   InputField(title: "Remind", hint: "$_selectReminder minutes early", widget: DropdownButton(
                     icon: Icon(Icons.keyboard_arrow_down_outlined, color: Colors.grey[700],),
                     iconSize: 24,
@@ -94,7 +102,7 @@ class _SetRemindersState extends State<SetReminders> {
               ),
               Column(
                 children: [
-                  SizedBox(height: 20,),
+                  const SizedBox(height: 20,),
                   InputField(title: "Repeat", hint: "$_selectedRepeat ", widget: DropdownButton(
                     icon: Icon(Icons.keyboard_arrow_down_outlined, color: Colors.grey[700],),
                     iconSize: 24,
@@ -114,17 +122,15 @@ class _SetRemindersState extends State<SetReminders> {
                   ),),
                 ],
               ),
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   _colorPallete(),
-                  GestureDetector(
-                    onTap: (){
-                      _validateData();
-                    },
-                      child: MyButton(label: "Create Reminder",))
+                  GestureDetector(onTap: () {
+                    _validateData();}, child: const MyButton(label: "Create Reminder",),
+                  )
                 ],
               )
             ],
@@ -137,21 +143,39 @@ class _SetRemindersState extends State<SetReminders> {
   _validateData(){
     if(_titleController.text.isNotEmpty && _noteController.text.isNotEmpty){
       //add to database
-      Get.back();
+      _addRemindersToDb();
+      Get.to(()=>const SavedReminders());
     } else if (_titleController.text.isEmpty || _noteController.text.isEmpty){
       Get.snackbar("Required", "Please Fill in the required Fields!",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.white,
           colorText: Colors.red,
-          icon: Icon(Icons.warning_amber_rounded, color: Colors.red,));
+          icon: const Icon(Icons.warning_amber_rounded, color: Colors.red,));
     }
+  }
+
+  _addRemindersToDb() async {
+    int value = await _remindController.addReminder(
+        reminder:Reminder(
+            title: _titleController.text,
+            note: _noteController.text,
+            time: _selectedTime.format(context).toString(),
+            date: DateFormat.MMMd().format(_currentDate),
+            remind: _selectReminder,
+            repeat: _selectedRepeat,
+            color: _selectedColor,
+            isCompleted: 0
+        )
+    );
+    print("my id is " "$value");
+
   }
   _colorPallete(){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         BigText(text: "Colors", color: Colors.deepOrangeAccent,),
-        SizedBox(height: 8.0,),
+        const SizedBox(height: 8.0,),
         Wrap(
           children: List<Widget>.generate(
               3, (index) =>
@@ -162,11 +186,11 @@ class _SetRemindersState extends State<SetReminders> {
                   });
                 },
                 child: Padding(
-                    padding: EdgeInsets.only(right: 8.0),
+                    padding: const EdgeInsets.only(right: 8.0),
                     child: CircleAvatar(
                       radius: 14,
-                      backgroundColor: index==0?Colors.deepOrangeAccent:index==1?Colors.purple:Color(0xFF304FFE),
-                      child: _selectedColor==index?Icon(Icons.done_rounded, color: Colors.white, size: 16,):Container(),
+                      backgroundColor: index==0?Colors.deepOrangeAccent:index==1?Colors.purple:const Color(0xFF304FFE),
+                      child: _selectedColor==index?const Icon(Icons.done_rounded, color: Colors.white, size: 16,):Container(),
                     )
                 ),
               )
@@ -183,14 +207,14 @@ class _SetRemindersState extends State<SetReminders> {
         onTap: () {
           Get.back();
         },
-        child: Icon(Icons.arrow_back_ios, color: Colors.deepOrangeAccent,),
+        child: const Icon(Icons.arrow_back_ios, color: Colors.deepOrangeAccent,),
       ),
       title: BigText(text: "Prophetic Prayers For Children", color: Colors.deepOrangeAccent, size: 18,),
       centerTitle: true,
       actions: [
         GestureDetector(
-          onTap: ()=>Get.to(SignInPage()),
-          child: CircleAvatar(
+          onTap: ()=>Get.to(const SignInPage()),
+          child: const CircleAvatar(
             backgroundColor: Colors.white,
             child: Icon(Icons.person, color: Colors.deepOrangeAccent,),
           ),
@@ -199,13 +223,15 @@ class _SetRemindersState extends State<SetReminders> {
     );
   }
   _getTimeOfDay() async {
-    TimeOfDay? _timePicker = await showTimePicker(
+    TimeOfDay? timePicker = await showTimePicker(
         initialEntryMode: TimePickerEntryMode.input,
         context: context,
         initialTime: TimeOfDay.now()
     );
-    if(_currentDate != DateTime.now() && _currentDate != null) {
-      setState((){_selectedTime = _timePicker!;});
+    if(_currentDate != DateTime.now()) {
+      setState((){
+        _selectedTime = timePicker!;
+      });
     } else {
       print("for some reasons we couldn't keep the time");
     }

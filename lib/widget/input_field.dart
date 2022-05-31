@@ -16,7 +16,7 @@ class InputField extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BigText(text: title, color: Colors.deepOrangeAccent,),
-          SizedBox(height: 10,),
+          const SizedBox(height: 10,),
           Container(
             height: 52,
             decoration: BoxDecoration(
@@ -24,7 +24,7 @@ class InputField extends StatelessWidget {
               border: Border.all(color: Colors.deepOrangeAccent, width: 1.0)
             ),
             child: Container(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

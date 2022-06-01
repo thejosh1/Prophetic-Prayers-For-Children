@@ -3,17 +3,17 @@ import 'package:sqflite/sqflite.dart';
 
 class DBHelper{
   static Database? _db;
-  static const int _version = 1;
-  static const String _tableName = "reminders";
+  static final int _version = 1;
+  static final String _tableName = "reminders";
 
   static Future<void> initDb() async {
     if(_db !=null) {
       return;
     }
     try {
-      String path = '${await getDatabasesPath()}reminders.db';
+       String _path = '${await getDatabasesPath()}reminders.db';
       _db = await openDatabase(
-        path,
+        _path,
         version: _version,
         onCreate: (db, version) {
           print("Creating a new Database");
@@ -32,9 +32,9 @@ class DBHelper{
     }
   }
 
-  static Future<int> insert(Reminder reminder) async {
+  static Future<int> insert(Reminder? reminder) async {
     print('insert function called');
-    return await _db?.insert(_tableName, reminder.toJson())??1;
+    return await _db?.insert(_tableName, reminder!.toJson())??1;
   }
 
   static Future<List<Map<String, dynamic>>> query() async {
@@ -44,6 +44,14 @@ class DBHelper{
 
   static delete(Reminder reminder) async {
     return await _db!.delete(_tableName, where: 'id=?', whereArgs: [reminder.id]);
+  }
+
+  static update(int id) async{
+    return await _db!.rawUpdate("""
+      UPDATE reminders
+      SET isCompleted = ?
+      WHERE id = ?
+    """, [1,id]);
   }
 
 

@@ -57,7 +57,7 @@ class _SetRemindersState extends State<SetReminders> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("Add Task", style: HeadingStyle, ),
-                  GestureDetector(onTap: ()=>Get.to(()=> SavedReminders()),child: const MyButton(label: "View Reminders", color: Colors.purple,))
+                  GestureDetector(onTap: ()=>Get.to(()=> const SavedReminders()),child: const MyButton(label: "View Reminders", color: Colors.purple,))
                 ],
               ),
               Column(
@@ -129,7 +129,8 @@ class _SetRemindersState extends State<SetReminders> {
                 children: [
                   _colorPallete(),
                   GestureDetector(onTap: () {
-                    _validateData();}, child: const MyButton(label: "Create Reminder",),
+                    _validateData();
+                    }, child: const MyButton(label: "Create Reminder",),
                   )
                 ],
               )
@@ -144,7 +145,7 @@ class _SetRemindersState extends State<SetReminders> {
     if(_titleController.text.isNotEmpty && _noteController.text.isNotEmpty){
       //add to database
       _addRemindersToDb();
-      Get.to(()=>const SavedReminders());
+      Get.back();
     } else if (_titleController.text.isEmpty || _noteController.text.isEmpty){
       Get.snackbar("Required", "Please Fill in the required Fields!",
           snackPosition: SnackPosition.BOTTOM,
@@ -228,7 +229,7 @@ class _SetRemindersState extends State<SetReminders> {
         context: context,
         initialTime: TimeOfDay.now()
     );
-    if(_currentDate != DateTime.now()) {
+    if(_selectedTime != null) {
       setState((){
         _selectedTime = timePicker!;
       });

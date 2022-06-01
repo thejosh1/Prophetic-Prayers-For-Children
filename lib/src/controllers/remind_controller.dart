@@ -13,10 +13,17 @@ class RemindController extends GetxController {
   //get all the data from the table
   void getReminders() async {
     List<Map<String, dynamic>> reminder = await DBHelper.query();
-    return remindersList.assignAll(reminder.map((data) => Reminder.fromJson(data)).toList());
+    remindersList.assignAll(reminder.map((data) => Reminder.fromJson(data)).toList());
   }
 
   void delete(Reminder reminder) {
     DBHelper.delete(reminder);
+    getReminders();
+
+  }
+
+  void markTaskcompleted(int id) async{
+    await DBHelper.update(id);
+    getReminders();
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:prophetic_prayers_for_children/src/pages/prayer_detail.dart';
+import 'package:prophetic_prayers_for_children/src/pages/saved_reminders.dart';
 import 'package:prophetic_prayers_for_children/src/pages/set_reminders.dart';
 import 'package:prophetic_prayers_for_children/utils/ui.dart';
 import 'package:prophetic_prayers_for_children/widget/big_text.dart';
@@ -102,7 +103,7 @@ class _PrayerListState extends State<PrayerList> {
                             ),
                             GestureDetector(
                                 onTap: (){
-                                  Get.to(()=> const SetReminders());
+                                  Get.to(()=> const SavedReminders());
                                 },
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -192,7 +193,7 @@ class _PrayerListState extends State<PrayerList> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              GestureDetector(onTap: ()=>Get.to(()=> const SetReminders()),child: const Icon(Icons.alarm_add, color: Colors.white, size: 20,)),
+                              GestureDetector(onTap: ()=>Get.to(()=> const SavedReminders()),child: const Icon(Icons.alarm_add, color: Colors.white, size: 20,)),
                               Text(DateFormat.MMMd().format(DateTime.now()), style: listHeadingStyle,),
                               GestureDetector(onTap: ()=>Get.to(const PrayerDetails()),child: const Icon(Icons.launch_outlined, color: Colors.white, size: 20,))
                             ],

@@ -3,6 +3,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:prophetic_prayers_for_children/src/controllers/remind_controller.dart';
+import 'package:prophetic_prayers_for_children/src/pages/main_page.dart';
 import 'package:prophetic_prayers_for_children/src/pages/set_reminders.dart';
 import 'package:prophetic_prayers_for_children/utils/ui.dart';
 import 'package:prophetic_prayers_for_children/widget/my_button.dart';
@@ -23,6 +24,7 @@ class _SavedRemindersState extends State<SavedReminders> {
   final RemindController _remindController = Get.put(RemindController());
   @override
   Widget build(BuildContext context) {
+    print("build method called");
     return Scaffold(
       appBar: _appBar(context),
       backgroundColor: Colors.white,
@@ -41,12 +43,14 @@ class _SavedRemindersState extends State<SavedReminders> {
                 ),
                 GestureDetector(onTap: () async {
                   await Get.to(()=>const SetReminders());
-                  _remindController.getReminders();}, child: const MyButton(label: "Add Task",),
+                  _remindController.getReminders();
+                  }, child: const MyButton(label: "Add Task",),
                 )
               ],
             ),
             BigText(text: "Today", color: Colors.black, size: 30,),
             const SizedBox(height: 10,),
+            _showReminders(),
 
           ],
         ),
@@ -59,7 +63,7 @@ class _SavedRemindersState extends State<SavedReminders> {
       backgroundColor: Colors.white,
       leading: GestureDetector(
         onTap: () {
-          Get.back();
+          Get.to(()=>MainPage());
         },
         child: const Icon(Icons.arrow_back_ios, color: Colors.deepOrangeAccent,),
       ),
@@ -76,18 +80,35 @@ class _SavedRemindersState extends State<SavedReminders> {
       ],
     );
   }
-  _showReminders() {
+  _showReminders(){
     return Expanded(
-        child:Obx((){
+        child: Obx((){
           return ListView.builder(
-              itemCount: _remindController.remindersList.length,
+              itemCount: _remindController.remindersList.isNotEmpty?_remindController.remindersList.length:1,
               itemBuilder: (_, index) {
-                return Container(
-
+                print(_remindController.remindersList.length);
+                return AnimationConfiguration.staggeredList(
+                    position: index,
+                    child: SlideAnimation(
+                      child: FadeInAnimation(
+                        child: Row(
+                          children: [
+                            GestureDetector(
+                              onTap: (){
+                                _showBottomSheet(context, _remindController.remindersList[index]);
+                              },
+                              child: _remindController.remindersList.isNotEmpty?ReminderTile(_remindController.remindersList[index]):Text("No Reminders yet go ahead and create one"),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
                 );
               });
-        }));
+        })
+    );
   }
+
 
   _showBottomSheet(BuildContext context, Reminder reminder){
     Get.bottomSheet(
@@ -109,14 +130,15 @@ class _SavedRemindersState extends State<SavedReminders> {
             ),
             Spacer(),
             reminder.isCompleted==1?Container():_bottomSheetButton(
-                label: "Task Completed", 
-                onTap: (){Get.back();}, 
+                label: "Task Completed",
+                onTap: (){
+                  _remindController.markTaskcompleted(reminder.id!);
+                  Get.back();},
                 color: Colors.blue, context: context),
             _bottomSheetButton(
                 label: "Delete Reminder",
                 onTap: (){
                   _remindController.delete(reminder);
-                  _remindController.getReminders();
                   Get.back();},
                 color: Colors.red[300]!,
                 context: context),
@@ -155,7 +177,7 @@ class _SavedRemindersState extends State<SavedReminders> {
           borderRadius: BorderRadius.circular(20),
           color: isClosed==true?Colors.transparent:color,
         ),
-        child: Center(child: Text(label, style: isClosed?titleHeadingStyle:titleHeadingStyle.copyWith(color: Colors.white),)),
+        child: Center(child: Text(label, style: isClosed?listHeadingStyle.copyWith(color: Colors.grey[600]):listHeadingStyle.copyWith(color: Colors.white),)),
       ),
     );
 }

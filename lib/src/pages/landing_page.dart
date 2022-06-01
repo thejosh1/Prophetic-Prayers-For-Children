@@ -35,27 +35,26 @@ class _LandingPageState extends State<LandingPage> {
                 const SizedBox(
                   height: 20,
                 ),
-                Container(
-                  margin: const EdgeInsets.only(bottom: 200),
-                  width: 250,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [
-                        Colors.orangeAccent,
-                        Colors.deepOrangeAccent,
-                      ],
-                      begin: Alignment.topRight,
-                      end: Alignment.bottomLeft,
-                      tileMode: TileMode.mirror
+                GestureDetector(
+                  onTap: (){
+                    Get.to(()=> const MainPage());
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.only(bottom: 200),
+                    width: 250,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [
+                          Colors.orangeAccent,
+                          Colors.deepOrangeAccent,
+                        ],
+                        begin: Alignment.topRight,
+                        end: Alignment.bottomLeft,
+                        tileMode: TileMode.mirror
+                      ),
+                      borderRadius: BorderRadius.circular(20)
                     ),
-                    borderRadius: BorderRadius.circular(20)
-                  ),
-                  child: GestureDetector(
-                    onTap: () {
-                      //Navigation Route
-                      Get.to(()=>const MainPage());
-                    },
                     child: Center(
                         child: BigText(text: "Get Started", color: Colors.white,)),
                   ),

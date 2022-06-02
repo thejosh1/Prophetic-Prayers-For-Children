@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:prophetic_prayers_for_children/src/pages/auth/sign_in_page.dart';
+import 'package:prophetic_prayers_for_children/utils/dimensions.dart';
 import 'package:prophetic_prayers_for_children/utils/ui.dart';
-import 'package:prophetic_prayers_for_children/widget/small_text.dart';
 
 import '../../widget/big_text.dart';
 
@@ -23,18 +23,18 @@ class PrayerDetails extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                child: Center(child: BigText(text: DateFormat.MMMd().format(DateTime.now()), size: 30,)),
+                child: Center(child: BigText(text: DateFormat.MMMd().format(DateTime.now()), size: Dimensions.height30,)),
               ),
-              const SizedBox(height: 20,),
+              SizedBox(height: Dimensions.height20,),
               Container(
-                margin: const EdgeInsets.only(left: 20, right: 20),
-                height: 200,
-                width: 300,
+                margin: EdgeInsets.only(left: Dimensions.width20, right: Dimensions.width20),
+                height: Dimensions.height100*2,
+                width: Dimensions.width100*3,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(Dimensions.height20),
                   border: Border.all(color: Colors.deepOrangeAccent, width: 2)
                 ),
-                child: Padding(padding: EdgeInsets.all(10),
+                child: Padding(padding: EdgeInsets.symmetric(horizontal: Dimensions.width10, vertical: Dimensions.height10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -58,9 +58,13 @@ class PrayerDetails extends StatelessWidget {
         onTap: () {
           Get.back();
         },
-        child: const Icon(Icons.arrow_back_ios, color: Colors.deepOrangeAccent,),
+        child: Container(
+          height: Dimensions.height20,
+          width: Dimensions.width20,
+          child: const Icon(Icons.arrow_back_ios, color: Colors.deepOrangeAccent,),
+        ),
       ),
-      title: BigText(text: "Prophetic Prayers For Children", color: Colors.deepOrangeAccent, size: 18,),
+      title: BigText(text: "Prophetic Prayers For Children", color: Colors.deepOrangeAccent, size: Dimensions.size18,),
       centerTitle: true,
       actions: [
         GestureDetector(

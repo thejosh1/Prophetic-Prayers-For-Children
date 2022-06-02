@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 import 'package:prophetic_prayers_for_children/src/services/reminder.dart';
+import 'package:prophetic_prayers_for_children/utils/dimensions.dart';
 
 class ReminderTile extends StatelessWidget {
   final Reminder? reminder;
@@ -10,12 +10,12 @@ class ReminderTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(left:Dimensions.width10, bottom: Dimensions.height4*3),
       width: 300,
-      margin: EdgeInsets.only(bottom: 12),
       child: Container(
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.symmetric(horizontal: Dimensions.width8*2, vertical: Dimensions.height4*4),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(Dimensions.size16),
           color: _getBGClr(reminder?.color??0),
         ),
         child: Row(children: [
@@ -27,13 +27,13 @@ class ReminderTile extends StatelessWidget {
                   reminder?.title??"",
                   style: GoogleFonts.lato(
                     textStyle: TextStyle(
-                        fontSize: 16,
+                        fontSize: Dimensions.size16,
                         fontWeight: FontWeight.bold,
                         color: Colors.white),
                   ),
                 ),
                 SizedBox(
-                  height: 12,
+                  height: Dimensions.height6*2,
                 ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -41,32 +41,32 @@ class ReminderTile extends StatelessWidget {
                     Icon(
                       Icons.access_time_rounded,
                       color: Colors.grey[200],
-                      size: 18,
+                      size: Dimensions.size18,
                     ),
                     SizedBox(width: 4),
                     Text(
                       "${reminder!.time} - ${reminder!.date}",
                       style: GoogleFonts.lato(
                         textStyle:
-                        TextStyle(fontSize: 13, color: Colors.grey[100]),
+                        TextStyle(fontSize: Dimensions.size13, color: Colors.grey[100]),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 12),
+                SizedBox(height: Dimensions.height6*2),
                 Text(
                   reminder?.note??"",
                   style: GoogleFonts.lato(
-                    textStyle: TextStyle(fontSize: 15, color: Colors.grey[100]),
+                    textStyle: TextStyle(fontSize: Dimensions.size15, color: Colors.grey[100]),
                   ),
                 ),
               ],
             ),
           ),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 10),
-            height: 60,
-            width: 0.5,
+            margin: EdgeInsets.symmetric(horizontal: Dimensions.width10),
+            height: Dimensions.height60,
+            width: Dimensions.width05,
             color: Colors.grey[200]!.withOpacity(0.7),
           ),
           RotatedBox(
@@ -75,7 +75,7 @@ class ReminderTile extends StatelessWidget {
               reminder!.isCompleted == 1 ? "COMPLETED" : "Reminder",
               style: GoogleFonts.lato(
                 textStyle: TextStyle(
-                    fontSize: 10,
+                    fontSize: Dimensions.width10,
                     fontWeight: FontWeight.bold,
                     color: Colors.white),
               ),

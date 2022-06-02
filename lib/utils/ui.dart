@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:prophetic_prayers_for_children/utils/dimensions.dart';
 
 
 TextStyle get HeadingStyle{
   return GoogleFonts.lato(
-    textStyle: const TextStyle(
-      fontSize: 30,
+    textStyle: TextStyle(
+      fontSize: Dimensions.width30,
       fontWeight: FontWeight.bold,
       color: Colors.deepOrangeAccent
     )
@@ -15,7 +16,7 @@ TextStyle get HeadingStyle{
 TextStyle get SubHeadingStyle {
   return GoogleFonts.lato(
     textStyle: TextStyle(
-      fontSize: 14,
+      fontSize: Dimensions.size14,
       fontWeight: FontWeight.w400,
       color: Colors.grey[600]
     )
@@ -25,7 +26,7 @@ TextStyle get SubHeadingStyle {
 TextStyle get ListHeadingStyle {
   return GoogleFonts.lato(
       textStyle: TextStyle(
-          fontSize: 14,
+          fontSize: Dimensions.size14,
           fontWeight: FontWeight.w400,
           color: Colors.white
       )
@@ -35,7 +36,7 @@ TextStyle get ListHeadingStyle {
 TextStyle get titleHeadingStyle {
   return GoogleFonts.lato(
       textStyle: TextStyle(
-          fontSize: 30,
+          fontSize: Dimensions.width30,
           fontWeight: FontWeight.w400,
           color: Colors.grey[600]
       )
@@ -45,7 +46,7 @@ TextStyle get titleHeadingStyle {
 TextStyle get listHeadingStyle {
   return GoogleFonts.lato(
       textStyle: TextStyle(
-          fontSize: 20,
+          fontSize: Dimensions.width20,
           fontWeight: FontWeight.w400,
           color: Colors.white
       )
@@ -55,7 +56,7 @@ TextStyle get listHeadingStyle {
 TextStyle get textHeadingStyle {
   return GoogleFonts.lato(
       textStyle: TextStyle(
-          fontSize: 20,
+          fontSize: Dimensions.width20,
           fontWeight: FontWeight.w400,
           color: Colors.black
       )

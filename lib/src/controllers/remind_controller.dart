@@ -1,29 +1,30 @@
 import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:prophetic_prayers_for_children/src/db/db_helper.dart';
 import 'package:prophetic_prayers_for_children/src/services/reminder.dart';
 
-class RemindController extends GetxController {
-
-  var remindersList = <Reminder>[].obs;
-
-  Future<int>addReminder({Reminder? reminder}) async{
-    return await DBHelper.insert(reminder!);
+class RemindController extends GetxController{
+  @override
+  void onReady(){
+    super.onReady();
   }
 
-  //get all the data from the table
-  void getReminders() async {
-    List<Map<String, dynamic>> reminder = await DBHelper.query();
-    remindersList.assignAll(reminder.map((data) => Reminder.fromJson(data)).toList());
+  var reminderList = <Reminder>[].obs;
+
+  Future<int> addReminder({Reminder? reminder}) async{
+    return await DBHelper.insert(reminder);
   }
 
-  void delete(Reminder reminder) {
-    DBHelper.delete(reminder);
-    getReminders();
-
+  Future<void> getReminders() async {
+    List<Map<String, dynamic>> reminders = await DBHelper.query();
+    reminderList.assignAll(reminders.map((data) => new Reminder.fromJson(data)).toList());
   }
 
-  void markTaskcompleted(int id) async{
-    await DBHelper.update(id);
-    getReminders();
+  Future<void> deleteReminders(Reminder reminder) async {
+    return await DBHelper.delete(reminder);
+  }
+
+  Future<void> markTaskCompleted (int id) async {
+    return await DBHelper.update(id);
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:prophetic_prayers_for_children/src/pages/auth/sign_in_page.dart';
 import 'package:prophetic_prayers_for_children/src/pages/main_page.dart';
+import 'package:prophetic_prayers_for_children/utils/dimensions.dart';
 import 'package:prophetic_prayers_for_children/widget/big_text.dart';
 import 'package:prophetic_prayers_for_children/widget/small_text.dart';
 
@@ -28,21 +29,21 @@ class _LandingPageState extends State<LandingPage> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                  margin: const EdgeInsets.only(left: 20),
+                  margin: EdgeInsets.only(left: Dimensions.width20),
                   width: 250,
-                  child: BigText(text: "Prophetic Prayers For Children", color: Colors.deepOrangeAccent, size: 20,),
+                  child: BigText(text: "Prophetic Prayers For Children", color: Colors.deepOrangeAccent, size: Dimensions.width20,),
                   ),
-                const SizedBox(
-                  height: 20,
+                SizedBox(
+                  height: Dimensions.height20,
                 ),
                 GestureDetector(
                   onTap: (){
                     Get.to(()=> const MainPage());
                   },
                   child: Container(
-                    margin: const EdgeInsets.only(bottom: 200),
-                    width: 250,
-                    height: 60,
+                    margin: EdgeInsets.only(bottom: Dimensions.bottom200),
+                    width: Dimensions.width250,
+                    height: Dimensions.height60,
                     decoration: BoxDecoration(
                       gradient: const LinearGradient(
                         colors: [
@@ -53,24 +54,24 @@ class _LandingPageState extends State<LandingPage> {
                         end: Alignment.bottomLeft,
                         tileMode: TileMode.mirror
                       ),
-                      borderRadius: BorderRadius.circular(20)
+                      borderRadius: BorderRadius.circular(Dimensions.height20)
                     ),
                     child: Center(
                         child: BigText(text: "Get Started", color: Colors.white,)),
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(bottom: 10),
+                  margin: EdgeInsets.only(bottom: Dimensions.height10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SmallText(text: "Powered by the army of david ministries", color: Colors.deepOrangeAccent, size: 12,),
+                      SmallText(text: "Powered by the army of david ministries", color: Colors.deepOrangeAccent, size: Dimensions.width12,),
                       GestureDetector(
                         onTap: (){
                           //Navigation Route
-                          Get.to(const SignInPage());
+                          Get.to(()=> const SignInPage());
                         },
-                          child: SmallText(text: "?Sign in", color: Colors.purple, size: 12,))
+                          child: SmallText(text: "?Sign in", color: Colors.purple, size: Dimensions.width12,))
                     ],
                   ),
                 )

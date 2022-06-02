@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:prophetic_prayers_for_children/src/controllers/remind_controller.dart';
 import 'package:prophetic_prayers_for_children/src/pages/saved_reminders.dart';
+import 'package:prophetic_prayers_for_children/utils/dimensions.dart';
 import 'package:prophetic_prayers_for_children/utils/ui.dart';
 import 'package:prophetic_prayers_for_children/widget/big_text.dart';
 import 'package:prophetic_prayers_for_children/widget/my_button.dart';
@@ -48,7 +49,7 @@ class _SetRemindersState extends State<SetReminders> {
       appBar: _appBar(context),
       backgroundColor: Colors.white,
       body: Container(
-        padding: const EdgeInsets.only(left: 20, right: 20,),
+        padding: EdgeInsets.only(left: Dimensions.width20, right: Dimensions.width20,),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,34 +57,40 @@ class _SetRemindersState extends State<SetReminders> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Add Task", style: HeadingStyle, ),
-                  GestureDetector(onTap: ()=>Get.to(()=> const SavedReminders()),child: const MyButton(label: "View Reminders", color: Colors.purple,))
+                  Text("Add Reminder", style: HeadingStyle, ),
+                  GestureDetector(onTap: ()async {
+                    await Get.to(()=> SavedReminders());
+                    _remindController.getReminders();
+                    },
+                      //This doesn't display the reminders until a new reminder has been added to the database after app initialization
+                      //And i don't know where the error is from
+                    child: const MyButton(label: "View Reminders", color: Colors.purple,))
                 ],
               ),
               Column(
                 children: [
-                  const SizedBox(height: 20,),
+                  SizedBox(height: Dimensions.height20,),
                   InputField(title: "Title", hint: "Enter Your Title", controller: _titleController,),
                 ],
               ),
               Column(
                 children: [
-                  const SizedBox(height: 20,),
+                  SizedBox(height: Dimensions.height20,),
                   InputField(title: "Note", hint: "Enter Your Note", controller: _noteController,),
                 ],
               ),
               Column(
                 children: [
-                  const SizedBox(height: 20,),
+                  SizedBox(height: Dimensions.height20,),
                   InputField(title: "Time", hint: _selectedTime.format(context).toString(), widget: IconButton(onPressed: (){_getTimeOfDay();}, icon: Icon(Icons.access_time_rounded, size: 14, color: Colors.grey[600],)),),
                 ],
               ),
               Column(
                 children: [
-                  const SizedBox(height: 20,),
+                  SizedBox(height: Dimensions.height20,),
                   InputField(title: "Remind", hint: "$_selectReminder minutes early", widget: DropdownButton(
                     icon: Icon(Icons.keyboard_arrow_down_outlined, color: Colors.grey[700],),
-                    iconSize: 24,
+                    iconSize: Dimensions.size24,
                     elevation: 4,
                     style: SubHeadingStyle,
                     underline: Container(height: 0,),
@@ -102,10 +109,10 @@ class _SetRemindersState extends State<SetReminders> {
               ),
               Column(
                 children: [
-                  const SizedBox(height: 20,),
+                  SizedBox(height: Dimensions.height20,),
                   InputField(title: "Repeat", hint: "$_selectedRepeat ", widget: DropdownButton(
                     icon: Icon(Icons.keyboard_arrow_down_outlined, color: Colors.grey[700],),
-                    iconSize: 24,
+                    iconSize: Dimensions.size24,
                     elevation: 4,
                     style: SubHeadingStyle,
                     underline: Container(height: 0,),
@@ -122,7 +129,7 @@ class _SetRemindersState extends State<SetReminders> {
                   ),),
                 ],
               ),
-              const SizedBox(height: 10,),
+              SizedBox(height: Dimensions.height10,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -130,6 +137,7 @@ class _SetRemindersState extends State<SetReminders> {
                   _colorPallete(),
                   GestureDetector(onTap: () {
                     _validateData();
+                    _remindController.getReminders();
                     }, child: const MyButton(label: "Create Reminder",),
                   )
                 ],
@@ -145,7 +153,7 @@ class _SetRemindersState extends State<SetReminders> {
     if(_titleController.text.isNotEmpty && _noteController.text.isNotEmpty){
       //add to database
       _addRemindersToDb();
-      Get.back();
+      Get.to(()=>SavedReminders());
     } else if (_titleController.text.isEmpty || _noteController.text.isEmpty){
       Get.snackbar("Required", "Please Fill in the required Fields!",
           snackPosition: SnackPosition.BOTTOM,
@@ -189,9 +197,9 @@ class _SetRemindersState extends State<SetReminders> {
                 child: Padding(
                     padding: const EdgeInsets.only(right: 8.0),
                     child: CircleAvatar(
-                      radius: 14,
+                      radius: Dimensions.size14,
                       backgroundColor: index==0?Colors.deepOrangeAccent:index==1?Colors.purple:const Color(0xFF304FFE),
-                      child: _selectedColor==index?const Icon(Icons.done_rounded, color: Colors.white, size: 16,):Container(),
+                      child: _selectedColor==index?Icon(Icons.done_rounded, color: Colors.white, size: Dimensions.size16,):Container(),
                     )
                 ),
               )
@@ -210,7 +218,7 @@ class _SetRemindersState extends State<SetReminders> {
         },
         child: const Icon(Icons.arrow_back_ios, color: Colors.deepOrangeAccent,),
       ),
-      title: BigText(text: "Prophetic Prayers For Children", color: Colors.deepOrangeAccent, size: 18,),
+      title: BigText(text: "Prophetic Prayers For Children", color: Colors.deepOrangeAccent, size: Dimensions.size18,),
       centerTitle: true,
       actions: [
         GestureDetector(

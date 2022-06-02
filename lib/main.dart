@@ -3,10 +3,9 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:prophetic_prayers_for_children/src/db/db_helper.dart';
 import 'package:prophetic_prayers_for_children/src/pages/landing_page.dart';
 
-
-Future<void> main() async{
-  WidgetsFlutterBinding.ensureInitialized();
-  await DBHelper.initDb();
+ Future<void> main() async{
+   WidgetsFlutterBinding.ensureInitialized();
+   await DBHelper.initBD();
   runApp(const MyApp());
 }
 

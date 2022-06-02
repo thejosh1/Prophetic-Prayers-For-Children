@@ -9,6 +9,7 @@ import 'package:prophetic_prayers_for_children/widget/big_text.dart';
 import 'package:prophetic_prayers_for_children/widget/my_button.dart';
 import 'package:prophetic_prayers_for_children/widget/input_field.dart';
 
+import '../services/notification_services.dart';
 import '../services/reminder.dart';
 import 'auth/sign_in_page.dart';
 
@@ -20,6 +21,7 @@ class SetReminders extends StatefulWidget {
 }
 
 class _SetRemindersState extends State<SetReminders> {
+  var notifyHelper;
   final RemindController _remindController = Get.put(RemindController());
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
@@ -42,6 +44,14 @@ class _SetRemindersState extends State<SetReminders> {
     "Daily"
   ];
   int _selectedColor=0;
+
+  @override
+  void initState(){
+    super.initState();
+    notifyHelper = NotifyHelper();
+    notifyHelper.initializeNotification();
+    notifyHelper.requestIOSPermissions();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -138,6 +148,10 @@ class _SetRemindersState extends State<SetReminders> {
                   GestureDetector(onTap: () {
                     _validateData();
                     _remindController.getReminders();
+                    notifyHelper.displayNotification(
+                      title: "You've just created a reminder",
+                      body: "this title"
+                    );
                     }, child: const MyButton(label: "Create Reminder",),
                   )
                 ],
